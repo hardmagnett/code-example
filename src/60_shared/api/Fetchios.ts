@@ -49,6 +49,9 @@ type FetchParams = {
   body?: Object;
 };
 
+/**
+ * Моя собственная реализация чего-то похожего на Axios.
+ */
 class Fetchios {
   private readonly baseUrl: string;
   constructor({ baseUrl = "" }: ConstructorParams = { baseUrl: "" }) {

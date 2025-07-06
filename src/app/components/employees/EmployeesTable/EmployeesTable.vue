@@ -9,7 +9,8 @@ const { paginatedEmployees, totalPaginatedEmployeesQty } =
   storeToRefs(employeesStore);
 const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
-import type { FilterEmployees } from "@/app/components/employees/EmployeesFilter/EmployeesFilter.vue";
+
+import type {FilterEmployees} from "@/50_entities/employee/model";
 
 defineEmits(["needToDeleteEmployee", "needToEditEmployee"]);
 

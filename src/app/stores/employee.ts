@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
-import apiMain from "@/app/api/apiMain";
+import fetchiosInstance from "@/60_shared/api/fetchiosInstance";
 import type { IEmployee } from "@/app/types/apiEntities";
 
 import Employee from "@/app/models/employee/Employee";
 import { useRepo } from "pinia-orm";
 const employeeRepo = useRepo(Employee); // Если будет глючить - сделать его computed/getter. В примерах оно было computed/getter.
 
-import type { FilterEmployees } from "@/app/components/employees/EmployeesFilter/EmployeesFilter.vue";
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import { isEmployeePassesFilter } from "@/app/components/employees/EmployeesFilter/employeeFilterHelpers";
+import type {FilterEmployees} from "@/50_entities/employee/model";
 
 export const useEmployeesStore = defineStore("employeesStore", {
   state: () => ({
@@ -30,7 +30,7 @@ export const useEmployeesStore = defineStore("employeesStore", {
       },
       { abortSignal }: { abortSignal?: AbortSignal } = {},
     ) {
-      const dataFromServer = (await apiMain.fetch({
+      const dataFromServer = (await fetchiosInstance.fetch({
         method: "get",
         url: "employees",
         getParams: {
@@ -55,7 +55,7 @@ export const useEmployeesStore = defineStore("employeesStore", {
       this.paginatedEmployeeIds = [];
     },
     async deleteEmployee({ employeeId }: { employeeId: number }) {
-      const dataFromServer = (await apiMain.fetch({
+      const dataFromServer = (await fetchiosInstance.fetch({
         method: "delete",
         url: `employees/${employeeId}`,
       })) as IEmployee;
@@ -77,7 +77,7 @@ export const useEmployeesStore = defineStore("employeesStore", {
       formData: AddEditFormData;
       filter: FilterEmployees;
     }) {
-      const dataFromServer = (await apiMain.fetch({
+      const dataFromServer = (await fetchiosInstance.fetch({
         method: "post",
         url: `employees/`,
         body: {
@@ -102,7 +102,7 @@ export const useEmployeesStore = defineStore("employeesStore", {
       return createdEmployee;
     },
     async editEmployee({ formData }: { formData: AddEditFormData }) {
-      const dataFromServer = (await apiMain.fetch({
+      const dataFromServer = (await fetchiosInstance.fetch({
         method: "put",
         url: `employees/${formData.id}`,
         body: {

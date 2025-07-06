@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { usePositionsStore } from "@/app/stores/position";
-const positionsStore = usePositionsStore();
-const { allPositions } = storeToRefs(positionsStore);
-
-import { computed, ref, onBeforeMount } from "vue";
+import {storeToRefs} from "pinia";
+import {usePositionsStore} from "@/app/stores/position";
+import {computed, onBeforeMount, ref} from "vue";
 import localStorageService from "@/a-library/helpers/DOM/localStorageService";
 import debounce from "@/a-library/helpers/language/functions/debounce";
 import deepEqual from "@/a-library/helpers/language/functions/deepEqual";
+import type {FilterEmployees} from "@/50_entities/employee/model";
 
-export type FilterEmployees = {
-  query: string;
-  positionsIds: number[];
-};
+const positionsStore = usePositionsStore();
+const { allPositions } = storeToRefs(positionsStore);
 
 const emit = defineEmits<{
   needToUpdateWholeFilter: [value: FilterEmployees];

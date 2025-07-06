@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import apiMain from "@/app/api/apiMain";
+import fetchiosInstance from "@/60_shared/api/fetchiosInstance";
 
 import Position from "@/app/models/position/Position";
 import { useRepo } from "pinia-orm";
@@ -17,7 +17,7 @@ export const usePositionsStore = defineStore("positionsStore", {
   },
   actions: {
     async fetchAllPositions() {
-      const dataFromServer = await apiMain.fetch({
+      const dataFromServer = await fetchiosInstance.fetch({
         method: "get",
         url: "positions",
       });

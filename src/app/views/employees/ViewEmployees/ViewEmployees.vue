@@ -5,9 +5,7 @@ import { onBeforeMount, reactive, ref } from "vue";
 import EmployeeDialogDelete from "@/app/components/employees/EmployeeDialogDelete/EmployeeDialogDelete.vue";
 import EmployeeDialogAddEdit from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import { globalProperties } from "@/main";
-import EmployeesFilter, {
-  type FilterEmployees,
-} from "@/app/components/employees/EmployeesFilter/EmployeesFilter.vue";
+import EmployeesFilter from "@/app/components/employees/EmployeesFilter/EmployeesFilter.vue";
 import { usePositionsStore } from "@/app/stores/position";
 import { useEmployeesStore } from "@/app/stores/employee";
 import { storeToRefs } from "pinia";
@@ -19,6 +17,7 @@ const { fetchAllPositions } = positionsStore;
 const employeesStore = useEmployeesStore();
 const { totalPaginatedEmployeesQty } = storeToRefs(employeesStore);
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
+import type {FilterEmployees} from "@/50_entities/employee/model";
 
 let isOpenDialogEmployeeDeleting = ref(false);
 

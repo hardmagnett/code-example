@@ -1,6 +1,10 @@
-class BaseAPIService {
+import fetchios from "./fetchiosInstance";
+import Fetchios from "./Fetchios";
 
+class BaseAPIService {
+  fetchios: Fetchios
   constructor() {
+    this.fetchios = fetchios
     // Здесь можно получить токен и записать его в экземпляр http-клиента.
   }
   
