@@ -30,7 +30,6 @@ class EmployeeAPIService extends BaseAPIService {
       },
       {
         errorText: "Ошибка при получении списка пользователей",
-        errorNotification: true,
       },
     );
   };

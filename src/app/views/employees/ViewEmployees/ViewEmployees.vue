@@ -19,12 +19,17 @@ const { totalPaginatedEmployeesQty } = storeToRefs(employeesStore);
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import type { FilterEmployees } from "@/50_entities/employee/model";
 
+import {type Position, PositionAPIService} from "@/50_entities/position/";
+const positionAPIService = new PositionAPIService();
+
 let isOpenDialogEmployeeDeleting = ref(false);
 
 let employeeToEdit = ref<Employee | null>(null);
 let employeeToDelete = ref<Employee | null>(null);
 
 let isOpenDialogEmployeeCreatingEditing = ref(false);
+
+let positions = ref<Position[]>([])
 
 let filter = reactive({
   query: "",
@@ -83,8 +88,9 @@ const createEditEmployee = async (formData: AddEditFormData) => {
 const updateWholeFilter = (newFilter: FilterEmployees) => {
   Object.assign(filter, newFilter);
 };
-onBeforeMount(() => {
+onBeforeMount(async () => {
   fetchAllPositions();
+  positions.value = (await positionAPIService.fetchAllPositions()).data
 });
 </script>
 
