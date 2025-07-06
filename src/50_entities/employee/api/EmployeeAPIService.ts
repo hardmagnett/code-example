@@ -1,6 +1,5 @@
 import {BaseAPIService} from "@/60_shared/api";
-
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type {Employee, FilterEmployees} from "@/50_entities/employee";
 
 class EmployeeAPIService extends BaseAPIService {
   // searchAddress = async (request: SearchAddressRequest) : Promise<SearchAddressResponce> => {
@@ -23,9 +22,9 @@ class EmployeeAPIService extends BaseAPIService {
       filter?: FilterEmployees | null;
     },
     { abortSignal }: { abortSignal?: AbortSignal } = {},
-  ) => {
+  ) : Promise<{ data: Employee[] }> => {
+    // return this.sendAndHandle<{ data: Employee[] }>(async () => {
     return this.sendAndHandle(async () => {
-        // return (await this.fetchios.fetch('Fias/SearchAddress', { params: request })).data
         return (await this.fetchios.fetch({
           method: "get",
           url: "employees",
@@ -37,62 +36,14 @@ class EmployeeAPIService extends BaseAPIService {
           },
           abortSignal: abortSignal,
           }
-        )).data
+        ))
+        // )).data
       },
       {
-        errorText: 'Ошибка при получении данных из ФИАС',
+        errorText: 'Ошибка при получении списка пользователей',
         errorNotification: true
       })
   }
-  // fetchPaginatedEmployees = async (
-  //   {
-  //     page = 1,
-  //     perPage = 50,
-  //     filter = null,
-  //   }: {
-  //     page?: number;
-  //     perPage?: number;
-  //     filter?: FilterEmployees | null;
-  //   },
-  //   { abortSignal }: { abortSignal?: AbortSignal } = {},
-  // ) => {
-  //   const dataFromServer = (await this.fetchios.fetch({
-  //     method: "get",
-  //     url: "employees",
-  //     getParams: {
-  //       page: page,
-  //       per_page: perPage,
-  //       position_ids: filter?.positionsIds ?? null,
-  //       firstname: filter?.query.trim() ?? null,
-  //     },
-  //     abortSignal: abortSignal,
-  //   })) as { data: IEmployee[]; total_count: number };
-  // }
-  
-  // fetchPaginatedEmployees = async (
-  //   {
-  //     page = 1,
-  //     perPage = 50,
-  //     filter = null,
-  //   }: {
-  //     page?: number;
-  //     perPage?: number;
-  //     filter?: FilterEmployees | null;
-  //   },
-  //   { abortSignal }: { abortSignal?: AbortSignal } = {},
-  // ) => {
-  //   const dataFromServer = (await this.fetchios.fetch({
-  //     method: "get",
-  //     url: "employees",
-  //     getParams: {
-  //       page: page,
-  //       per_page: perPage,
-  //       position_ids: filter?.positionsIds ?? null,
-  //       firstname: filter?.query.trim() ?? null,
-  //     },
-  //     abortSignal: abortSignal,
-  //   })) as { data: IEmployee[]; total_count: number };
-  // }
   
   
   // searchAddress = async (request: SearchAddressRequest) : Promise<SearchAddressResponce> => {

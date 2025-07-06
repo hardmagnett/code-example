@@ -13,10 +13,11 @@ export default class Employee extends Model {
       position: this.belongsTo(Position, 'position_id')
     }
   }
-  declare id: string
+  declare id: number
   declare firstname: string
   declare lastname: string
-  declare position_id: string | null
+  // declare position_id: number | null
+  declare position_id: number
   declare position: Position | null
   
   // @Uid() declare id: number;

@@ -10,7 +10,11 @@ const { paginatedEmployees, totalPaginatedEmployeesQty } =
 const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
 
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type {Employee, FilterEmployees} from "@/50_entities/employee/model";
+// import {EmployeeAPIService} from "@/50_entities/employee/api/EmployeeAPIService";
+import {EmployeeAPIService} from "@/50_entities/employee/";
+
+const employeeAPIService = new EmployeeAPIService()
 
 defineEmits(["needToDeleteEmployee", "needToEditEmployee"]);
 
@@ -21,6 +25,8 @@ const props = withDefaults(defineProps<Props>(), {});
 
 let pageNumber = ref(1);
 let infinityResetId = ref(0);
+
+let paginatedEmployeesTEMP = ref<Employee[]>([])
 
 let filterChangeHandler = () => {
   pageNumber.value = 1;
@@ -36,6 +42,17 @@ const loadMore = async ($state: StateHandler) => {
     page: pageNumber.value,
     filter: props.filter,
   });
+  
+  const tempResult = await employeeAPIService.fetchPaginatedEmployees(
+      {
+        page: pageNumber.value,
+        filter: props.filter,
+      }
+  )
+  console.log(tempResult); console.log('^...tempResult:')
+
+  paginatedEmployeesTEMP.value=tempResult.data
+  
 
   if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
     $state.completed();
@@ -50,6 +67,8 @@ onBeforeMount(() => {});
 
 <template>
   <ATable class="employees-table a-table--fixed-header">
+    <p style="font-size: 9px;">{{paginatedEmployeesTEMP}}</p>
+    
     <thead>
       <tr>
         <th>Сотрудник</th>
