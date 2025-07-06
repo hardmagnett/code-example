@@ -6,9 +6,9 @@ import { onBeforeMount, ref, watch } from "vue";
 import AInfinity from "@/a-library/components/other/AInfinity/AInfinity.vue";
 const employeesStore = useEmployeesStore();
 // const { paginatedEmployees, totalPaginatedEmployeesQty } =
-const { totalPaginatedEmployeesQty } =
-  storeToRefs(employeesStore);
-const { fetchPaginatedEmployees, clearPagination } = employeesStore;
+// const { totalPaginatedEmployeesQty } =
+//   storeToRefs(employeesStore);
+// const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
 
 import type { Employee, FilterEmployees } from "@/50_entities/employee/model";
@@ -26,6 +26,7 @@ let pageNumber = ref(1);
 let infinityResetId = ref(0);
 
 let paginatedEmployees = ref<Employee[]>([]);
+const totalPaginatedEmployeesQty = ref<number | null>(null)
 
 let filterChangeHandler = () => {
   pageNumber.value = 1;
@@ -36,27 +37,41 @@ watch(props.filter, () => {
   filterChangeHandler();
 });
 
+const clearPagination = ()=>{
+  totalPaginatedEmployeesQty.value = null;
+  paginatedEmployees.value = [];
+}
+
 const loadMore = async ($state: StateHandler) => {
-  await fetchPaginatedEmployees({
-    page: pageNumber.value,
-    filter: props.filter,
-  });
+  // await fetchPaginatedEmployees({
+  //   page: pageNumber.value,
+  //   filter: props.filter,
+  // });
 
   const tempResult = await employeeAPIService.fetchPaginatedEmployees({
+  // paginatedEmployees.value = (await employeeAPIService.fetchPaginatedEmployees({
     page: pageNumber.value,
     filter: props.filter,
   });
-  // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
-  console.log(tempResult);
-  // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
-  console.log("^...tempResult:");
+  // // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
+  // console.log(tempResult);
+  // // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
+  // console.log("^...tempResult:");
 
-  paginatedEmployees.value = tempResult.data;
+  
+  // paginatedEmployees.value = tempResult.data;
+  paginatedEmployees.value = [
+      ...paginatedEmployees.value,
+      ...tempResult.data
+  ];
+  totalPaginatedEmployeesQty.value = tempResult.total_count;
 
   if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
     $state.completed();
+    console.log(1)
   } else {
     $state.loaded();
+    console.log(2)
   }
   pageNumber.value++;
 };

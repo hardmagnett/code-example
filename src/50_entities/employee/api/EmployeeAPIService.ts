@@ -13,7 +13,7 @@ class EmployeeAPIService extends BaseAPIService {
       filter?: FilterEmployees | null;
     },
     { abortSignal }: { abortSignal?: AbortSignal } = {},
-  ): Promise<{ data: Employee[] }> => {
+  ): Promise<{ data: Employee[], total_count: number }> => {
     return this.sendAndHandle(
       async () => {
         return await this.fetchios.fetch({
