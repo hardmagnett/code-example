@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    "no-console": "warn",
+    'no-console': ["error", { allow: ["warn", "error"] }],
     // Линтер путает вот такие TS-конструкции (через pipe)
     // <EmployeeDialogAddEdit :employee="employeeToEdit as Employee | null"></EmployeeDialogAddEdit>
     // с фильтрами, которые были во vue2 а во vue3 стали deprecated.

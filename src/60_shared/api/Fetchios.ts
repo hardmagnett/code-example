@@ -74,7 +74,8 @@ class Fetchios {
     }
     return finalUrl;
   }
-  fetch({ url, method, getParams = {}, abortSignal, body }: FetchParams) {
+  // Запрос на сервер может вернуть любой тип данных
+  fetch({ url, method, getParams = {}, abortSignal, body }: FetchParams): any {
     return new Promise((resolve, reject) => {
       const finalUrl = this._prepareUrl({ url, getParams });
 

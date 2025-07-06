@@ -1,5 +1,5 @@
 import { Model } from "pinia-orm";
-import { Str, Num } from "pinia-orm/decorators";
+// import { Str, Num } from "pinia-orm/decorators";
 export default class Position extends Model {
   static entity = "positions";
 

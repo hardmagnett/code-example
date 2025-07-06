@@ -49,6 +49,7 @@ const loadMore = async ($state: StateHandler) => {
         filter: props.filter,
       }
   )
+  // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
   console.log(tempResult); console.log('^...tempResult:')
 
   paginatedEmployeesTEMP.value=tempResult.data

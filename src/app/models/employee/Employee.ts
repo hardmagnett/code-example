@@ -1,5 +1,5 @@
 import { Model } from "pinia-orm";
-import { BelongsTo, Str, Uid, Num } from "pinia-orm/decorators";
+// import { BelongsTo, Str, Uid, Num } from "pinia-orm/decorators";
 import Position from "@/app/models/position/Position";
 export default class Employee extends Model {
   static entity = "employees";
