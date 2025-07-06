@@ -17,7 +17,7 @@
   "dependencies": {
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "i18next": "^23.11.5",
+    "i18next": "^25.3.1",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "pinia-orm": "^1.9.2",
