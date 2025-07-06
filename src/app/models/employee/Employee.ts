@@ -27,4 +27,4 @@ class Employee extends Model {
     return `${this.firstname} ${this.lastname}`;
   }
 }
-export default Employee
+export default Employee;

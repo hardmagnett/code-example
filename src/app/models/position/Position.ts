@@ -14,4 +14,4 @@ class Position extends Model {
   declare title: string;
 }
 
-export default Position
+export default Position;

@@ -164,12 +164,12 @@ background-color:(var(--clr-fill-blue-small));
   --_sat-fill-accent: 52%;
   --_light-fill-accent: 34%;
 
-  --clr-fill-blue-small-raw: var(--_hue-blue), var(--_sat-fill-small),
-    var(--_light-fill-small);
+  --clr-fill-blue-small-raw:
+    var(--_hue-blue), var(--_sat-fill-small), var(--_light-fill-small);
   --clr-fill-blue-small: hsl(var(--clr-fill-blue-small-raw));
 
-  --clr-fill-blue-big-raw: var(--_hue-blue), var(--_sat-fill-big),
-    var(--_light-fill-big);
+  --clr-fill-blue-big-raw:
+    var(--_hue-blue), var(--_sat-fill-big), var(--_light-fill-big);
   --clr-fill-blue-big: hsl(var(--clr-fill-blue-big-raw));
 
   --clr-fill-blue-accent: hsl(
@@ -178,8 +178,8 @@ background-color:(var(--clr-fill-blue-small));
     var(--_light-fill-accent)
   );
 
-  --clr-fill-red-small-raw: var(--_hue-red), var(--_sat-fill-small),
-    var(--_light-fill-small);
+  --clr-fill-red-small-raw:
+    var(--_hue-red), var(--_sat-fill-small), var(--_light-fill-small);
   --clr-fill-red-small: hsl(var(--clr-fill-red-small-raw));
 
   --clr-fill-red-big: hsl(
@@ -193,8 +193,8 @@ background-color:(var(--clr-fill-blue-small));
     var(--_light-fill-accent)
   );
 
-  --clr-fill-green-small-raw: var(--_hue-green), var(--_sat-fill-small),
-    var(--_light-fill-small);
+  --clr-fill-green-small-raw:
+    var(--_hue-green), var(--_sat-fill-small), var(--_light-fill-small);
   --clr-fill-green-small: hsl(var(--clr-fill-green-small-raw));
 
   --clr-fill-green-big: hsl(
@@ -208,8 +208,8 @@ background-color:(var(--clr-fill-blue-small));
     var(--_light-fill-accent)
   );
 
-  --clr-fill-orange-small-raw: var(--_hue-orange), var(--_sat-fill-small),
-    var(--_light-fill-small);
+  --clr-fill-orange-small-raw:
+    var(--_hue-orange), var(--_sat-fill-small), var(--_light-fill-small);
   --clr-fill-orange-small: hsl(var(--clr-fill-orange-small-raw));
 
   --clr-fill-orange-big: hsl(
