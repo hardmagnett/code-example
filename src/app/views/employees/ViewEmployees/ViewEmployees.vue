@@ -11,7 +11,12 @@ import APageHeaderWithTeleport from "@/a-library/components/layout/APageHeaderWi
 import { getValueOfCSSVariableAsNumber } from "@/a-library/helpers/DOM/getCSSVariable";
 const employeesStore = useEmployeesStore();
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
-import {type Employee, type FilterEmployees, getFullName} from "@/50_entities/employee";
+import {
+  type Employee,
+  type FilterEmployees,
+  getFullName,
+  type TotalPaginatedEmployeesQty
+} from "@/50_entities/employee";
 
 import { EmployeeAPIService } from "@/50_entities/employee/";
 const employeeAPIService = new EmployeeAPIService();
@@ -27,6 +32,7 @@ let employeeToDelete = ref<Employee | null>(null);
 let isOpenDialogEmployeeCreatingEditing = ref(false);
 
 let paginatedEmployees = ref<Employee[]>([]);
+const totalPaginatedEmployeesQty = ref<TotalPaginatedEmployeesQty>(null)
 
 let positions = ref<Position[]>([])
 provide(allPositionsInjectionKey, positions)
@@ -67,13 +73,10 @@ const deleteEmployee = () => {
     });
     
     if (!deletedEmployee) return;
+    const deletedId = deletedEmployee.id;
+    paginatedEmployees.value = paginatedEmployees.value.filter(e=> e.id !== deletedId)
 
     // Это скопировано из экшна.
-    // const deletedId = deletedEmployee.id;
-    // const deletedEmployee = employeeRepo.destroy(deletedId);
-    // this.paginatedEmployeeIds = this.paginatedEmployeeIds.filter(
-    //     (id) => id !== deletedId,
-    // );
     // if (typeof this.totalPaginatedEmployeesQty === "number") {
     //   this.totalPaginatedEmployeesQty--;
     // }
@@ -121,10 +124,9 @@ onBeforeMount(async () => {
       </ABtn>
       <p class="mod--mt-0 mod--mb-0">
         Найдено:
-        <span
-            id="total-paginated-employees-qty-teleport"
-            class="employees__qty-number"
-        ></span>
+        <span class="employees__qty-number">
+          {{totalPaginatedEmployeesQty}}
+        </span>
       </p>
     </div>
 
@@ -150,10 +152,12 @@ onBeforeMount(async () => {
 
     <EmployeesTable
       :filter="filter"
+      :totalPaginatedEmployeesQty="totalPaginatedEmployeesQty"
       :paginated-employees="paginatedEmployees"
       @needToDeleteEmployee="needToDeleteEmployeeHandler"
       @needToEditEmployee="needToEditEmployeeHandler"
       @needToUpdatePaginatedEmployees="needToUpdatePaginatedEmployeesHandler"
+      @needToUpdateTotalPaginatedEmployeesQty="($event: number | null)=> {totalPaginatedEmployeesQty = $event}"
     />
   </div>
 </template>

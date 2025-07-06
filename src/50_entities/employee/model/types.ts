@@ -12,3 +12,5 @@ export type Employee = {
   position_id?: number;
   position?: Position;
 };
+
+export type TotalPaginatedEmployeesQty = number | null
