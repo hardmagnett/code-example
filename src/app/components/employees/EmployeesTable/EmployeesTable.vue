@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import EmployeeRow from "@/app/components/employees/EmployeeRow/EmployeeRow.vue";
-import { useEmployeesStore } from "@/app/stores/employee";
-import { storeToRefs } from "pinia";
 import { onBeforeMount, ref, watch } from "vue";
 import AInfinity from "@/a-library/components/other/AInfinity/AInfinity.vue";
-const employeesStore = useEmployeesStore();
-// const { paginatedEmployees, totalPaginatedEmployeesQty } =
-// const { totalPaginatedEmployeesQty } =
-//   storeToRefs(employeesStore);
-// const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
 
 import type { Employee, FilterEmployees } from "@/50_entities/employee/model";
@@ -43,23 +36,10 @@ const clearPagination = ()=>{
 }
 
 const loadMore = async ($state: StateHandler) => {
-  // await fetchPaginatedEmployees({
-  //   page: pageNumber.value,
-  //   filter: props.filter,
-  // });
-
   const tempResult = await employeeAPIService.fetchPaginatedEmployees({
-  // paginatedEmployees.value = (await employeeAPIService.fetchPaginatedEmployees({
     page: pageNumber.value,
     filter: props.filter,
   });
-  // // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
-  // console.log(tempResult);
-  // // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
-  // console.log("^...tempResult:");
-
-  
-  // paginatedEmployees.value = tempResult.data;
   paginatedEmployees.value = [
       ...paginatedEmployees.value,
       ...tempResult.data
@@ -68,15 +48,11 @@ const loadMore = async ($state: StateHandler) => {
 
   if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
     $state.completed();
-    console.log(1)
   } else {
     $state.loaded();
-    console.log(2)
   }
   pageNumber.value++;
 };
-
-onBeforeMount(() => {});
 </script>
 
 <template>
