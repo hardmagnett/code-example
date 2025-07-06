@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EmployeesTable from "@/app/components/employees/EmployeesTable/EmployeesTable.vue";
 import AIcon from "@/a-library/components/typo/AIcon/AIcon.vue";
-import { onBeforeMount, reactive, ref } from "vue";
+import {onBeforeMount, reactive, ref, provide, inject, readonly} from "vue";
 import EmployeeDialogDelete from "@/app/components/employees/EmployeeDialogDelete/EmployeeDialogDelete.vue";
 import EmployeeDialogAddEdit from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import { globalProperties } from "@/main";
@@ -19,7 +19,7 @@ const { totalPaginatedEmployeesQty } = storeToRefs(employeesStore);
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import type { FilterEmployees } from "@/50_entities/employee/model";
 
-import {type Position, PositionAPIService} from "@/50_entities/position/";
+import {allPositionsInjectionKey, type Position, PositionAPIService} from "@/50_entities/position/";
 const positionAPIService = new PositionAPIService();
 
 let isOpenDialogEmployeeDeleting = ref(false);
@@ -30,6 +30,7 @@ let employeeToDelete = ref<Employee | null>(null);
 let isOpenDialogEmployeeCreatingEditing = ref(false);
 
 let positions = ref<Position[]>([])
+provide(allPositionsInjectionKey, positions)
 
 let filter = reactive({
   query: "",
@@ -91,6 +92,7 @@ const updateWholeFilter = (newFilter: FilterEmployees) => {
 onBeforeMount(async () => {
   fetchAllPositions();
   positions.value = (await positionAPIService.fetchAllPositions()).data
+  // positions = (await positionAPIService.fetchAllPositions()).data
 });
 </script>
 
