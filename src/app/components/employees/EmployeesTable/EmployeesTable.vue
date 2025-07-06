@@ -12,7 +12,6 @@ import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfin
 
 import type { Employee, FilterEmployees } from "@/50_entities/employee/model";
 import { EmployeeAPIService } from "@/50_entities/employee/";
-
 const employeeAPIService = new EmployeeAPIService();
 
 defineEmits(["needToDeleteEmployee", "needToEditEmployee"]);
@@ -48,6 +47,7 @@ const loadMore = async ($state: StateHandler) => {
   });
   // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
   console.log(tempResult);
+  // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
   console.log("^...tempResult:");
 
   paginatedEmployeesTEMP.value = tempResult.data;

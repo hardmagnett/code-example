@@ -35,5 +35,4 @@ class EmployeeAPIService extends BaseAPIService {
     );
   };
 }
-
 export { EmployeeAPIService };
