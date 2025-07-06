@@ -28,7 +28,6 @@ class BaseAPIService {
       if (errorText && errorNotification) {
         console.error('В этом месте можно выводить ошибку например в toast-notification. Но пока-что это не реализовано.')
       }
-      result = null // Возможно этот null вообще не нужен
     }
     return result
   }

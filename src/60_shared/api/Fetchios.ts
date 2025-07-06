@@ -74,6 +74,8 @@ class Fetchios {
     }
     return finalUrl;
   }
+  // todo:: линтнер на этот any не ругается. Может дело в JS-овском методе fetch?
+  //  Нужно проверить дать any в другом месте, и возможно поправить правило линта.
   // Запрос на сервер может вернуть любой тип данных
   fetch({ url, method, getParams = {}, abortSignal, body }: FetchParams): any {
     return new Promise((resolve, reject) => {

@@ -11,7 +11,6 @@ const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
 
 import type {Employee, FilterEmployees} from "@/50_entities/employee/model";
-// import {EmployeeAPIService} from "@/50_entities/employee/api/EmployeeAPIService";
 import {EmployeeAPIService} from "@/50_entities/employee/";
 
 const employeeAPIService = new EmployeeAPIService()
