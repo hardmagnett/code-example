@@ -11,8 +11,8 @@ const employeeAPIService = new EmployeeAPIService();
 const emit = defineEmits<{
   needToUpdateTotalPaginatedEmployeesQty: [total: TotalPaginatedEmployeesQty];
   needToUpdatePaginatedEmployees: [employees: Employee[]];
-  needToEditEmployee: {employee: Employee},
-  needToDeleteEmployee: {employee: Employee}
+  needToEditEmployee: [val: {employee: Employee}],
+  needToDeleteEmployee: [val: {employee: Employee}]
 }>()
 
 export interface Props {
@@ -86,11 +86,13 @@ const loadMore = async ($state: StateHandler) => {
       </tr>
     </thead>
     <tbody>
+    <!--@needToDeleteEmployee="$emit('needToDeleteEmployee', $event)"-->
+    <!--@needToEditEmployee="$emit('needToEditEmployee', $event)"-->
       <EmployeeRow
         v-for="employee in paginatedEmployees"
         :employee="employee"
-        @needToDeleteEmployee="$emit('needToDeleteEmployee', $event)"
-        @needToEditEmployee="$emit('needToEditEmployee', $event)"
+        @needToDeleteEmployee="emit('needToDeleteEmployee', $event)"
+        @needToEditEmployee="emit('needToEditEmployee', $event)"
         :key="employee.id"
       />
     </tbody>
