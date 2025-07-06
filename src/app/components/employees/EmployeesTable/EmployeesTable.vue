@@ -80,6 +80,9 @@ onBeforeMount(() => {});
 </script>
 
 <template>
+  <Teleport defer to="#total-paginated-employees-qty-teleport">
+    {{ totalPaginatedEmployeesQty }}
+  </Teleport>
   <ATable class="employees-table a-table--fixed-header">
     <p style="font-size: 9px">{{ paginatedEmployees }}</p>
 

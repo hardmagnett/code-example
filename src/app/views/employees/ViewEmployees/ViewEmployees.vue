@@ -105,9 +105,10 @@ onBeforeMount(async () => {
       </ABtn>
       <p class="mod--mt-0 mod--mb-0">
         Найдено:
-        <span class="employees__qty-number">
-          {{ totalPaginatedEmployeesQty }}
-        </span>
+        <span
+            id="total-paginated-employees-qty-teleport"
+            class="employees__qty-number"
+        ></span>
       </p>
     </div>
 
