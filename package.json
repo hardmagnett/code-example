@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@mswjs/data": "^0.16.1",
-    "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^24.0.10",
     "@vitejs/plugin-vue": "^5.0.4",
