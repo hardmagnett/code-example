@@ -1,24 +1,34 @@
 <script setup lang="ts">
 import EmployeeRow from "@/app/components/employees/EmployeeRow/EmployeeRow.vue";
-import { onBeforeMount, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import AInfinity from "@/a-library/components/other/AInfinity/AInfinity.vue";
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
 
 import type { Employee, FilterEmployees } from "@/50_entities/employee/model";
 import { EmployeeAPIService } from "@/50_entities/employee/";
+import employee from "@/app/models/employee/Employee.ts";
 const employeeAPIService = new EmployeeAPIService();
 
-defineEmits(["needToDeleteEmployee", "needToEditEmployee"]);
+// defineEmits([
+//     "needToDeleteEmployee",
+//     "needToEditEmployee"
+// ]);
+const emit = defineEmits<{
+  needToUpdatePaginatedEmployees: [employees: Employee[]];
+  needToEditEmployee: [],
+  needToDeleteEmployee: []
+}>()
 
 export interface Props {
   filter: FilterEmployees;
+  paginatedEmployees: Employee[];
 }
 const props = withDefaults(defineProps<Props>(), {});
 
 let pageNumber = ref(1);
 let infinityResetId = ref(0);
 
-let paginatedEmployees = ref<Employee[]>([]);
+// let paginatedEmployees = ref<Employee[]>([]);
 const totalPaginatedEmployeesQty = ref<number | null>(null)
 
 let filterChangeHandler = () => {
@@ -30,9 +40,14 @@ watch(props.filter, () => {
   filterChangeHandler();
 });
 
+const emitPaginatedEmployees = (employees: Employee[]) => {
+  emit('needToUpdatePaginatedEmployees', employees)
+}
+
 const clearPagination = ()=>{
   totalPaginatedEmployeesQty.value = null;
-  paginatedEmployees.value = [];
+  // paginatedEmployees.value = [];
+  emitPaginatedEmployees([])
 }
 
 const loadMore = async ($state: StateHandler) => {
@@ -40,13 +55,18 @@ const loadMore = async ($state: StateHandler) => {
     page: pageNumber.value,
     filter: props.filter,
   });
-  paginatedEmployees.value = [
-      ...paginatedEmployees.value,
-      ...tempResult.data
-  ];
+  emitPaginatedEmployees([
+    ...props.paginatedEmployees,
+    ...tempResult.data
+  ])
+  // paginatedEmployees.value = [
+  //     ...paginatedEmployees.value,
+  //     ...tempResult.data
+  // ];
   totalPaginatedEmployeesQty.value = tempResult.total_count;
 
-  if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
+  // if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
+  if (props.paginatedEmployees.length === totalPaginatedEmployeesQty.value) {
     $state.completed();
   } else {
     $state.loaded();
@@ -60,7 +80,7 @@ const loadMore = async ($state: StateHandler) => {
     {{ totalPaginatedEmployeesQty }}
   </Teleport>
   <ATable class="employees-table a-table--fixed-header">
-    <p style="font-size: 9px">{{ paginatedEmployees }}</p>
+    <!--<p style="font-size: 9px">{{ paginatedEmployees }}</p>-->
 
     <thead>
       <tr>

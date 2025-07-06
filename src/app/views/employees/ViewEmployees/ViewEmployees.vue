@@ -6,18 +6,15 @@ import EmployeeDialogDelete from "@/app/components/employees/EmployeeDialogDelet
 import EmployeeDialogAddEdit from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import { globalProperties } from "@/main";
 import EmployeesFilter from "@/app/components/employees/EmployeesFilter/EmployeesFilter.vue";
-import { usePositionsStore } from "@/app/stores/position";
 import { useEmployeesStore } from "@/app/stores/employee";
-import { storeToRefs } from "pinia";
 import APageHeaderWithTeleport from "@/a-library/components/layout/APageHeaderWithTeleport/APageHeaderWithTeleport.vue";
-import type Employee from "@/app/models/employee/Employee";
 import { getValueOfCSSVariableAsNumber } from "@/a-library/helpers/DOM/getCSSVariable";
-const positionsStore = usePositionsStore();
-const { fetchAllPositions } = positionsStore;
 const employeesStore = useEmployeesStore();
-const { totalPaginatedEmployeesQty } = storeToRefs(employeesStore);
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
-import type { FilterEmployees } from "@/50_entities/employee/model";
+import {type Employee, type FilterEmployees, getFullName} from "@/50_entities/employee";
+
+import { EmployeeAPIService } from "@/50_entities/employee/";
+const employeeAPIService = new EmployeeAPIService();
 
 import {allPositionsInjectionKey, type Position, PositionAPIService} from "@/50_entities/position/";
 const positionAPIService = new PositionAPIService();
@@ -29,6 +26,8 @@ let employeeToDelete = ref<Employee | null>(null);
 
 let isOpenDialogEmployeeCreatingEditing = ref(false);
 
+let paginatedEmployees = ref<Employee[]>([]);
+
 let positions = ref<Position[]>([])
 provide(allPositionsInjectionKey, positions)
 
@@ -39,6 +38,10 @@ let filter = reactive({
 
 let filterUpdatesQtyKey = ref(0);
 let closingDialogAnimationTime = getValueOfCSSVariableAsNumber("--time-short");
+
+const needToUpdatePaginatedEmployeesHandler = (employees: Employee[])=>{
+  paginatedEmployees.value = employees
+}
 
 const needToDeleteEmployeeHandler = ({ employee }: { employee: Employee }) => {
   employeeToDelete.value = employee;
@@ -59,12 +62,25 @@ const deleteEmployee = () => {
   isOpenDialogEmployeeDeleting.value = false;
   setTimeout(async () => {
     if (!employeeToDelete.value) return;
-    let deletedEmployee = await employeesStore.deleteEmployee({
+    let deletedEmployee = await employeeAPIService.deleteEmployee({
       employeeId: employeeToDelete.value.id,
     });
+    
     if (!deletedEmployee) return;
+
+    // Это скопировано из экшна.
+    // const deletedId = deletedEmployee.id;
+    // const deletedEmployee = employeeRepo.destroy(deletedId);
+    // this.paginatedEmployeeIds = this.paginatedEmployeeIds.filter(
+    //     (id) => id !== deletedId,
+    // );
+    // if (typeof this.totalPaginatedEmployeesQty === "number") {
+    //   this.totalPaginatedEmployeesQty--;
+    // }
+    
+    
     globalProperties.$toast({
-      message: `Сотрудник "${deletedEmployee.fullname}" удален`,
+      message: `Сотрудник "${getFullName(deletedEmployee)}" удален`,
       type: "error",
     });
   }, closingDialogAnimationTime);
@@ -90,7 +106,7 @@ const updateWholeFilter = (newFilter: FilterEmployees) => {
   Object.assign(filter, newFilter);
 };
 onBeforeMount(async () => {
-  fetchAllPositions();
+  // fetchAllPositions();
   positions.value = (await positionAPIService.fetchAllPositions()).data
   // positions = (await positionAPIService.fetchAllPositions()).data
 });
@@ -134,8 +150,10 @@ onBeforeMount(async () => {
 
     <EmployeesTable
       :filter="filter"
+      :paginated-employees="paginatedEmployees"
       @needToDeleteEmployee="needToDeleteEmployeeHandler"
       @needToEditEmployee="needToEditEmployeeHandler"
+      @needToUpdatePaginatedEmployees="needToUpdatePaginatedEmployeesHandler"
     />
   </div>
 </template>

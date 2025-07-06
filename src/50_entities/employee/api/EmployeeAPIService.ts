@@ -32,6 +32,21 @@ class EmployeeAPIService extends BaseAPIService {
         errorText: "Ошибка при получении списка пользователей",
       },
     );
-  };
+  }
+  deleteEmployee = async (
+    { employeeId }: { employeeId: number }
+  ): Promise<Employee> => {
+    return this.sendAndHandle(
+      async () => {
+        return await this.fetchios.fetch({
+          method: "delete",
+          url: `employees/${employeeId}`,
+        });
+      },
+      {
+        errorText: "Ошибка при удалении пользователя",
+      },
+    );
+  }
 }
 export { EmployeeAPIService };

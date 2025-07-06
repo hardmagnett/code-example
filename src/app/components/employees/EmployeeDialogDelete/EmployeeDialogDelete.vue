@@ -2,7 +2,8 @@
 import {} from "vue";
 import { iDialogablePropDefaults } from "@/app/component-interfaces/IDialogable";
 import type { IDialogableProps } from "@/app/component-interfaces/IDialogable";
-import type Employee from "@/app/models/employee/Employee";
+import {type Employee, getFullName} from "@/50_entities/employee";
+// import type Employee from "@/app/models/employee/Employee";
 
 // const emit = defineEmits<{
 defineEmits<{
@@ -30,7 +31,7 @@ withDefaults(defineProps<Props>(), {
       @needToClose="$emit('needToClose')"
       @apply="$emit('apply')"
     >
-      <p>Действительно удалить сотрудника "{{ employee.fullname }}"?</p>
+      <p>Действительно удалить сотрудника "{{ getFullName(employee) }}"?</p>
     </ADialog>
   </div>
 </template>
