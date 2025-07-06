@@ -10,7 +10,6 @@ import { helpers } from "@vuelidate/validators";
 import { storeToRefs } from "pinia";
 import { usePositionsStore } from "@/app/stores/position";
 import type {Employee} from "@/50_entities/employee";
-// import type Employee from "@/app/models/employee/Employee";
 const positionsStore = usePositionsStore();
 const { allPositions } = storeToRefs(positionsStore);
 
