@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { usePositionsStore } from "@/app/stores/position";
-import { computed, onBeforeMount, ref } from "vue";
+import {computed, inject, onBeforeMount, type Ref, ref} from "vue";
 import localStorageService from "@/a-library/helpers/DOM/localStorageService";
 import debounce from "@/a-library/helpers/language/functions/debounce";
 import deepEqual from "@/a-library/helpers/language/functions/deepEqual";
 import type { FilterEmployees } from "@/50_entities/employee/model";
-
-const positionsStore = usePositionsStore();
-const { allPositions } = storeToRefs(positionsStore);
+import {allPositionsInjectionKey, type Position} from "@/50_entities/position";
+const allPositions = inject(allPositionsInjectionKey) as Ref<Position[]>
 
 const emit = defineEmits<{
   needToUpdateWholeFilter: [value: FilterEmployees];
@@ -97,7 +94,7 @@ onBeforeMount(() => {
       label="Должности"
       multiple
       v-model="filterInner.positionsIds"
-      :options="allPositions()"
+      :options="allPositions"
       hide-hint
     />
   </div>

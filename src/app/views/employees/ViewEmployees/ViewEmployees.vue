@@ -75,12 +75,10 @@ const deleteEmployee = () => {
     if (!deletedEmployee) return;
     const deletedId = deletedEmployee.id;
     paginatedEmployees.value = paginatedEmployees.value.filter(e=> e.id !== deletedId)
-
-    // Это скопировано из экшна.
-    // if (typeof this.totalPaginatedEmployeesQty === "number") {
-    //   this.totalPaginatedEmployeesQty--;
-    // }
     
+    if (totalPaginatedEmployeesQty.value) {
+      totalPaginatedEmployeesQty.value --;
+    }
     
     globalProperties.$toast({
       message: `Сотрудник "${getFullName(deletedEmployee)}" удален`,
@@ -109,9 +107,7 @@ const updateWholeFilter = (newFilter: FilterEmployees) => {
   Object.assign(filter, newFilter);
 };
 onBeforeMount(async () => {
-  // fetchAllPositions();
   positions.value = (await positionAPIService.fetchAllPositions()).data
-  // positions = (await positionAPIService.fetchAllPositions()).data
 });
 </script>
 
