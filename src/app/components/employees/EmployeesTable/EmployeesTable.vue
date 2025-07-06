@@ -5,7 +5,8 @@ import { storeToRefs } from "pinia";
 import { onBeforeMount, ref, watch } from "vue";
 import AInfinity from "@/a-library/components/other/AInfinity/AInfinity.vue";
 const employeesStore = useEmployeesStore();
-const { paginatedEmployees, totalPaginatedEmployeesQty } =
+// const { paginatedEmployees, totalPaginatedEmployeesQty } =
+const { totalPaginatedEmployeesQty } =
   storeToRefs(employeesStore);
 const { fetchPaginatedEmployees, clearPagination } = employeesStore;
 import type { StateHandler } from "@/a-library/components/other/AInfinity/AInfinity.vue";
@@ -24,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {});
 let pageNumber = ref(1);
 let infinityResetId = ref(0);
 
-let paginatedEmployeesTEMP = ref<Employee[]>([]);
+let paginatedEmployees = ref<Employee[]>([]);
 
 let filterChangeHandler = () => {
   pageNumber.value = 1;
@@ -50,7 +51,7 @@ const loadMore = async ($state: StateHandler) => {
   // eslint-disable-next-line no-console -- Это всё равно я буду убирать.
   console.log("^...tempResult:");
 
-  paginatedEmployeesTEMP.value = tempResult.data;
+  paginatedEmployees.value = tempResult.data;
 
   if (paginatedEmployees.value.length === totalPaginatedEmployeesQty.value) {
     $state.completed();
@@ -65,7 +66,7 @@ onBeforeMount(() => {});
 
 <template>
   <ATable class="employees-table a-table--fixed-header">
-    <p style="font-size: 9px">{{ paginatedEmployeesTEMP }}</p>
+    <p style="font-size: 9px">{{ paginatedEmployees }}</p>
 
     <thead>
       <tr>

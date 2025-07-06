@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type Employee from "@/app/models/employee/Employee";
+// import type Employee from "@/app/models/employee/Employee";
+// import type Employee from "@/app/models/employee/Employee";
+
+import {type Employee, getFullName} from "@/50_entities/employee";
 
 const emit = defineEmits<{
   needToDeleteEmployee: [val: { employee: Employee }];
@@ -15,7 +18,8 @@ withDefaults(defineProps<Props>(), {});
 <template>
   <tr class="employee-row">
     <td class="mod--ellipsis-one-line-on-table-cell">
-      {{ employee.fullname }}
+      <!--{{ employee.fullname }}-->
+      {{ getFullName(employee) }}
     </td>
     <td class="mod--ellipsis-one-line-on-table-cell">
       {{ employee.position?.title }}
