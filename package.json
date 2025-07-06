@@ -39,7 +39,7 @@
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.3.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12",
+    "vite": "^6.3.5",
     "vue-tsc": "^2.0.19"
   },
   "msw": {
