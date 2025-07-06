@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { Model } from "pinia-orm";
-// import { Str, Num } from "pinia-orm/decorators";
-export default class Position extends Model {
+// @ts-ignore
+class Position extends Model {
   static entity = "positions";
 
   static fields() {
@@ -12,3 +13,5 @@ export default class Position extends Model {
   declare id: number;
   declare title: string;
 }
+
+export default Position

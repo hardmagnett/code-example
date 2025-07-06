@@ -1,7 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "node_modules/@types"],
-  "exclude": ["src/**/__tests__/*"],
+  "exclude": [
+    "src/**/__tests__/*",
+//    "src/app/models/employee/Employee.ts"
+  ],
   "compilerOptions": {
 
     // Эти 2 Нужны для PiniaORM
