@@ -1,5 +1,5 @@
 import type Employee from "@/app/models/employee/Employee";
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type { FilterEmployees } from "@/50_entities/employee/model";
 
 const isEmployeePassesFilter = (
   employee: Employee,

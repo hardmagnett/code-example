@@ -8,7 +8,7 @@ const employeeRepo = useRepo(Employee); // Если будет глючить - 
 
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
 import { isEmployeePassesFilter } from "@/app/components/employees/EmployeesFilter/employeeFilterHelpers";
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type { FilterEmployees } from "@/50_entities/employee/model";
 
 export const useEmployeesStore = defineStore("employeesStore", {
   state: () => ({

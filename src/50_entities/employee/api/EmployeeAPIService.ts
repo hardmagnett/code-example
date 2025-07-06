@@ -1,5 +1,5 @@
-import {BaseAPIService} from "@/60_shared/api";
-import type {Employee, FilterEmployees} from "@/50_entities/employee";
+import { BaseAPIService } from "@/60_shared/api";
+import type { Employee, FilterEmployees } from "@/50_entities/employee";
 
 class EmployeeAPIService extends BaseAPIService {
   fetchPaginatedEmployees = async (
@@ -13,9 +13,10 @@ class EmployeeAPIService extends BaseAPIService {
       filter?: FilterEmployees | null;
     },
     { abortSignal }: { abortSignal?: AbortSignal } = {},
-  ) : Promise<{ data: Employee[] }> => {
-    return this.sendAndHandle(async () => {
-        return (await this.fetchios.fetch({
+  ): Promise<{ data: Employee[] }> => {
+    return this.sendAndHandle(
+      async () => {
+        return await this.fetchios.fetch({
           method: "get",
           url: "employees",
           getParams: {
@@ -25,14 +26,14 @@ class EmployeeAPIService extends BaseAPIService {
             firstname: filter?.query.trim() ?? null,
           },
           abortSignal: abortSignal,
-          }
-        ))
+        });
       },
       {
-        errorText: 'Ошибка при получении списка пользователей',
-        errorNotification: true
-      })
-  }
+        errorText: "Ошибка при получении списка пользователей",
+        errorNotification: true,
+      },
+    );
+  };
 }
 
-export {EmployeeAPIService}
+export { EmployeeAPIService };

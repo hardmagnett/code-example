@@ -3,12 +3,12 @@ import { Model } from "pinia-orm";
 export default class Position extends Model {
   static entity = "positions";
 
-  static fields(){
+  static fields() {
     return {
       id: this.uid(),
-      title: this.string(''),
-    }
+      title: this.string(""),
+    };
   }
-  declare id: number
-  declare title: string
+  declare id: number;
+  declare title: string;
 }

@@ -17,7 +17,7 @@ const { fetchAllPositions } = positionsStore;
 const employeesStore = useEmployeesStore();
 const { totalPaginatedEmployeesQty } = storeToRefs(employeesStore);
 import type { AddEditFormData } from "@/app/components/employees/EmployeeDialogAddEdit/EmployeeDialogAddEdit.vue";
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type { FilterEmployees } from "@/50_entities/employee/model";
 
 let isOpenDialogEmployeeDeleting = ref(false);
 

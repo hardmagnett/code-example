@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {storeToRefs} from "pinia";
-import {usePositionsStore} from "@/app/stores/position";
-import {computed, onBeforeMount, ref} from "vue";
+import { storeToRefs } from "pinia";
+import { usePositionsStore } from "@/app/stores/position";
+import { computed, onBeforeMount, ref } from "vue";
 import localStorageService from "@/a-library/helpers/DOM/localStorageService";
 import debounce from "@/a-library/helpers/language/functions/debounce";
 import deepEqual from "@/a-library/helpers/language/functions/deepEqual";
-import type {FilterEmployees} from "@/50_entities/employee/model";
+import type { FilterEmployees } from "@/50_entities/employee/model";
 
 const positionsStore = usePositionsStore();
 const { allPositions } = storeToRefs(positionsStore);

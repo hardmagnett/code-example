@@ -4,7 +4,7 @@ export type FilterEmployees = {
 };
 
 export type Employee = {
-  id: number,
-  firstname: string,
-  lastname: string
-}
+  id: number;
+  firstname: string;
+  lastname: string;
+};
